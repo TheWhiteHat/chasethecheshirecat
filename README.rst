@@ -12,5 +12,3 @@ Apps
 * ``score`` - list groups and their score.
 * ``submit`` - provides functionlity to list challenges and submit answers to them.
 * ``judge`` - judge, reward points, and add challenges.
-
-a
