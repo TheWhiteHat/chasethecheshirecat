@@ -12,3 +12,4 @@ Apps
 * ``score`` - list groups and their score.
 * ``submit`` - provides functionlity to list challenges and submit answers to them.
 * ``judge`` - judge, reward points, and add challenges.
+* ``player`` - represents a player in this game. its an extension of the user object in django. 
