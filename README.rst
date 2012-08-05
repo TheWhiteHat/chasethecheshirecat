@@ -33,6 +33,8 @@ Views
 * ``create_info_page`` - display form to create a new info page.
 * ``create_announcement`` - display form to create new announcement. 
 
+-----------------------------------------------
+
 ``score``
 ---------
 Models
@@ -42,6 +44,9 @@ Models
 Views
 ~~~~~
 * ``view_scores`` - display groups and their points. sortable.
+
+
+-----------------------------------------------
 
 ``game``
 --------
@@ -62,6 +67,9 @@ Views
 * ``list_submissions`` - lists submissions by a group
 * ``submit`` - display appropiate submit form for a given challenge.
 
+
+-----------------------------------------------
+
 ``judge``
 ---------
 Models
@@ -73,6 +81,9 @@ Views
 ~~~~~
 * ``list_submissions`` - list all submissions by all groups
 * ``judge_submission`` - display form to judge a submission and process it.
+
+
+-----------------------------------------------
 
 ``player``
 ----------
