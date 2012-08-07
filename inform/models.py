@@ -27,4 +27,4 @@ class NewInfoPageForm(forms.Form):
 class NewAnnouncementForm(forms.Form):
     title = forms.CharField(max_length=100)
     body_text = forms.CharField(widget=forms.Textarea)
-    comments_allowed = forms.BooleanField()
+    comments_allowed = forms.BooleanField(required=False)

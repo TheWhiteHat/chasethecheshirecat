@@ -12,6 +12,11 @@ Latest announcements:<br>
 <a href="page/announcements/">View all announcements</a>
 <hr />
 this is the main page<br>
-
+{% if user.is_authenticated %}
+<a href="/page/newinfopage">create a new info page</a> (the will be acessible at /page/[name you typed in the form])<br>
+<a href="/page/newannouncement">create a new announcement</a><br>
+{% else %}
+please log in to view links
+{% endif %}
 </body>
 </html>
