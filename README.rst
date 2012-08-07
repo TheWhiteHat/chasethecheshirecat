@@ -28,8 +28,10 @@ Models
 
 Views
 ~~~~~
+* ``view_info_page`` - display the index of the site with latest announcements and links.
 * ``view_info_page`` - display InfoPage
 * ``view_announcement`` - display a single annoucement
+* ``list_announcements`` - list all announcements
 * ``create_info_page`` - display form to create a new info page.
 * ``create_announcement`` - display form to create new announcement. 
 

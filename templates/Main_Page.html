@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>Welcome</title>
+</head>
+<body>
+Latest announcements:<br>
+{% for a in announcements %}
+    {{ a.title }}<br>
+    {{ a.body_text }} <br>
+    by {{ a.author.email }}<br><br>
+{% endfor %}
+<a href="page/announcements/">View all announcements</a>
+<hr />
+this is the main page<br>
+
+</body>
+</html>
