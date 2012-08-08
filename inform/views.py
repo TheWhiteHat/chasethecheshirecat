@@ -55,7 +55,7 @@ def create_announcement(request):
         form = NewAnnouncementForm(request.POST)
         if form.is_valid():
             try:
-                new_announcement = Announcement(title=form.cleaned_data['title'],body_text=form.cleaned_data['body_text'],author=request.user)
+                new_announcement = Announcement(title=form.cleaned_data['title'],body_text=form.cleaned_data['body_text'], comments_allowed=form.cleaned_data['comments_allowed'],author=request.user)
                 new_announcement.save()
             except:
                 return HttpResponse(status=500)

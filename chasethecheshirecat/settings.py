@@ -119,12 +119,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inform',
+    'inform','player',
     # Uncomment the next line to enable the admin:
      'django.contrib.admin',
+     'django.contrib.comments',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTH_PROFILE_MODULE = 'player.Player'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

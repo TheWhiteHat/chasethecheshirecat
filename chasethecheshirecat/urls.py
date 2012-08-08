@@ -8,7 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$|(page/)',include('inform.urls')),
+    (r'^player/',include('player.urls')),
     (r'^admin/', include(admin.site.urls)),  
+    (r'^comments/', include('django.contrib.comments.urls')),  
     # Examples:
     # url(r'^$', 'chasethecheshirecat.views.home', name='home'),
     # url(r'^chasethecheshirecat/', include('chasethecheshirecat.foo.urls')),

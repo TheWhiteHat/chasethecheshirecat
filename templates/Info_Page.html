@@ -9,5 +9,23 @@ body text: {{ page.body_text }}<br>
 are comments allowed? {{ page.comments_allowed }}<br>
 pub date: {{ page.pub_date }}<br>
 author: {{ page.author.email }}<br>
+
+
+{% if page.comments_allowed %}
+{% load comments %}
+<br><br>comments are allowed, here they are:<br>
+{% render_comment_list for page %}
+<hr />
+{% if user.is_authenticated %}
+<br>wanna post a comment? here you go:<br>
+{% render_comment_form for page %}
+{% else %}
+<br>please login to view comments<br>
+{% endif %}
+{% else %}
+
+<br><br>comments are not allowed on this page.<br>
+
+{% endif %}
 </body>
 </html>

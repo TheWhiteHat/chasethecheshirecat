@@ -5,6 +5,12 @@ Welcome, this is the source for a puzzle/scavenger hunt website. This site will 
 Different challenges will be posted periodically and will be worth a number of points. Submissions will be text/video/audio/images. Judging will be done
 manually and teams may be penalized and commented on by judges.
 
+Wanna help?
+**********
+* Learn `Python <http://code.google.com/edu/languages/google-python-class/>`_
+* Learn `Django <https://docs.djangoproject.com/en/1.4>`_
+* Join the project and start committing :) 
+
 Apps Summary
 ************
 
