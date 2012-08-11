@@ -1,0 +1,13 @@
+{% extends "Base.html" %}
+{% block page_title %}Login{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Login</h1>    
+
+<form action="{% url django.contrib.auth.views.login %}" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="hidden" name="next" value="/"/>
+<input type="submit" value="login"/>
+</form>
+</div>
+{% endblock %}

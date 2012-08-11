@@ -1,0 +1,14 @@
+{% extends "Base.html" %}
+{% block page_title %}Leave a team{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Leave Your Team</h1>
+{% if user.get_profile.team %}
+Are you sure you want to leave '{{ user.get_profile.team.name }}'?<br>
+<a href="/players/leaveteam/?confirm=true">Yes, leave team</a>
+{% else %}
+You are not part of any team.
+{% endif %}
+
+</div>
+{% endblock %}

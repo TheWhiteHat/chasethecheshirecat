@@ -1,9 +1,9 @@
-<html>
-<head>
-<title>new announcement</title>
-</head>
-<body>
-enter new info page:<br>
+{% extends "Base.html" %}
+{% block page_title %}New Announcement{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Create New Announcement</h1>
+{% if user.is_authenticated and user.get_profile.is_judge %}
 <form action="/page/newannouncement/" method="post">{% csrf_token %}
     {% for field in form %}
         {{ field.errors }}
@@ -11,5 +11,8 @@ enter new info page:<br>
     {% endfor %}
     <input type="submit" value="new page"/>
 </form>
-</body>
-</html>
+{% else %}
+you are not authorized to create a new announcement.
+{% endif %}
+</div>
+{% endblock %}

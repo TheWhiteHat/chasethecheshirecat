@@ -1,0 +1,208 @@
+body {
+    margin: 70px 0px 0px 0px;
+    background-color: #666;
+}
+div#header{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 40px;
+    color: #000;
+    font-family: sans-serif;
+    font-size: 12px;
+    padding: 8px;
+    background-color: #333;
+    box-shadow: 0px 0px 3px 2px #000;
+    -webkit-box-shadow:  0px 0px 3px 2px #000;
+    -moz-box-shadow: 0px 0px 3px 2px #000;
+    background: linear-gradient(top, #333, #444);
+    background: -moz-linear-gradient(top, #333, #444);
+    background: -webkit-linear-gradient(top, #333, #444);
+    background: -ms-linear-gradient(top, #333, #444);
+    background: -o-linear-gradient(top, #333, #444);
+}
+div#footer{
+    height:20px;
+    padding: 5px;
+    width: 910px;
+    color: #fff;
+    clear: both;
+    font-family: sans-serif;
+    font-size: 11px;
+    margin: 40px auto 0px auto;
+}
+div.spacer{
+    clear:both;
+}
+div#header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 30px;
+    margin: 0px;
+    font-weight: normal;
+    display: inline;
+    color: #EFEFEF;
+    line-height: 40px;
+
+}
+div#headerText{
+    width: 930px;
+    margin: auto;
+    text-align: center;
+}
+div#headerText ul{
+    margin: 0px 0px 0px 20px;
+    list-style-type: none;
+    display: inline;
+    padding: 0px;
+}
+div#headerText li{
+    display: inline;
+    font-size: 18px;
+    margin: 0px 10px 0px 10px;
+}
+div#headerText li a{
+    color: #ccc;
+    text-decoration: none;
+}
+div#headerText li a:hover{
+    color: #F9F9F9;
+    text-decoration: none;
+}
+div#content{
+    width: 930px;
+    height: auto;
+    margin: auto;
+}
+div.bigBox{
+    width: 910px;
+    border-radius: 4px;
+    background-color: #ccc;
+    padding: 10px;
+    font-family: sans-serif;
+    margin-bottom: 15px;
+}
+div.bigBox h1{
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 36px;
+    color: #333;
+    margin: 0px 0px 10px 0px;
+    font-weight: normal;
+}
+div.bigBox a{
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0788BF;
+}
+div.bigBox a:hover{
+    color: #222;
+}
+div.fLeft{
+    float: left;
+    clear: none;
+}
+div.fRight{
+    float: right;
+    clear: none;
+}
+div.halfBox{
+    width: 440px;
+    padding: 10px;
+    height: auto;
+    font-family: sans-serif;
+    border-radius: 4px;
+    background-color: #B7B7B7;
+    margin-top: 14px;
+    font-size: 14px;
+}
+div.halfBox h1{
+    font-family: sans-serif;
+    color: #333;
+    margin: 0px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 20px;    
+}
+div.halfBox h3{
+    font-family: sans-serif;
+    color: #555;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0px;
+}
+div.halfBox ul{
+    margin: 0px 0px 0px 0px;
+    list-style-type: none;
+    display: inline;
+    padding: 0px;
+}
+div.halfBox li{
+    display: list-item;
+    padding-left: -1em;
+    text-indent: 0em;
+    margin-bottom: 10px;
+
+}
+div.halfBox a{
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0788BF;
+}
+div.halfBox a:hover{
+    color: #222;
+}
+div.halfBox ol{
+    margin: 0px 0px 10px 0px;
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+input.beautifulText{
+    border-radius: 3px;
+    border: 1px solid #222;
+    height: 25px;
+    line-height: 25px;
+    font-family: sans-serif;
+    font-size: 14px;
+    padding: 3px;
+    background: #A5F1FF;
+    width: 200px;
+}
+input{
+    margin-bottom: 10px;
+}
+input:focus{
+    background-color: #CCF5FC;
+}
+input.beautifulButton{
+    padding: 5px;
+    height: 40px;
+    line-height: 30px;
+}
+textarea.beautifulText{
+    border-radius: 3px;
+    border: 1px solid #222;
+    line-height: 25px;
+    font-family: sans-serif;
+    font-size: 14px;
+    padding: 3px;
+    background: #A5F1FF;
+    width:200px;
+}
+textarea.beautifulText:focus{
+    background-color: #ccf5fc;
+}
+div.comment{
+    background-color: #B7B7B7;
+    color: #000;
+    padding: 10px 0px 10px 10px;
+    line-height: 25px;
+    margin-bottom: 10px;
+}
+div.comment p{
+    padding: 0px 10px 0px 10px;
+    margin: 0px;
+}
+div.comment i{
+    color: #888;
+}

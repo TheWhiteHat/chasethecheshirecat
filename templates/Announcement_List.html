@@ -1,17 +1,20 @@
-<html>
-<head>
-<title>All announcements</title>
-</head>
-<body>
+{% extends "Base.html" %}
+{% block page_title %}All Announcements{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+    <h1>All announcements</h1>
+
 {% for a in announcements %}
-   announcement title: {{ a.title }}<br>
-   announcement body: {{ a.body_text }}<br>
-   announcement date: {{ a.pub_date }}<br>
-   announcement author: {{ a.author.email }}<br>
-   <hr />
+    <div class="listBox">
+    <p>
+        <a href="{{ a.get_absolute_url }}">{{ a.title }}</a><br>
+         {{ a.body_text }}<br>
+         <i>posted by {{ a.author.username }} on {{ a.pub_date }}</i>
+    </p>
+    </div>
 {% endfor %}
-<br><br>
-I'm now gonna start paginating:<br><br>
+
+Pages:<br>
 {% if announcements.has_previous %}
     <a href="{{ request.get_full_path }}{{ announcements.previous_page_number }}">previous</a>
 {% endif %}
@@ -19,6 +22,5 @@ Page {{ announcements.number }} of {{ announcements.paginator.num_pages }}.
 {% if announcements.has_next %}
     <a href="{{ request.get_full_path }}{{ announcements.next_page_number }}">next</a>
 {% endif %}
-
-</body>
-</html>
+</div>
+{% endblock %}

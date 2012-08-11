@@ -1,7 +1,8 @@
-<html>
-    <head>register a new player</head>
-    <body>
-        Enter new info for player:<br><br>
+{% extends "Base.html" %}
+{% block page_title %}Register new player{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Register</h1>
         <form action="/player/newplayer/" method="post">{% csrf_token %}
             {{ form.non_field_errors }}
             {% for field in form %}
@@ -10,5 +11,5 @@
             {% endfor %}
             <input type="submit" value="add user"/>
         </form>
-    </body>
-</html>
+</div>
+{% endblock %}

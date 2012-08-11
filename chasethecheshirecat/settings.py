@@ -1,4 +1,5 @@
 # Django settings for chasethecheshirecat project.
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -59,7 +60,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/luis/Projects/chasethecheshirecat/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -111,6 +112,9 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     'templates/',
 )
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',

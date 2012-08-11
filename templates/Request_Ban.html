@@ -1,0 +1,20 @@
+{% extends "Base.html" %}
+{% block page_title %}request ban{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Request a User Ban</h1>
+{% if user.is_authenticated  %}
+Please note that all bans must be confirmed by judges.<br>
+<form action="/player/requestban/" method="post">{% csrf_token %}
+{{ form.non_field_errors }}
+{% for field in form %}
+{{ field.errors }}<br>
+{{ field.label_tag }} : {{ field }} <br>
+{% endfor %}
+<input type="submit" value="request ban" />
+</form>
+{% else %}
+You must be logged in to submit a ban request.
+{% endif %}
+</div>
+{% endblock %}

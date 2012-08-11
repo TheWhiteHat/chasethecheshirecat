@@ -1,9 +1,12 @@
-from player.models import *
+from player.models import * 
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
+from django.forms.util import ErrorList
+import string
+import random
 
 
 def view_player_info(request,query):
@@ -14,15 +17,23 @@ def view_team_info(request,query):
     team = get_object_or_404(Team,id=query)
     return render_to_response("Team_Page.html",{"team":team},context_instance=RequestContext(request))
 
+def player_home(request):
+    return render_to_response("Player_Home.html",context_instance=RequestContext(request))
+
 def register_new_player(request):
     if request.method == 'POST':
         form = NewPlayerForm(request.POST)
         if form.is_valid():
             try:
-                new_user = User(username=form.cleaned_data['name'],password=form.cleaned_data['password'],email=form.cleaned_data['email'])
+                new_user = User()
+                new_user.username = form.cleaned_data['name']
+                new_user.email = form.cleaned_data['email']
+                new_user.set_password(form.cleaned_data['password'])
                 new_user.save()
-                new_user.get_profile().about = form.cleaned_data['about']
-                new_user.save()
+                new_player = Player.objects.get(user=new_user)
+                new_player.about = form.cleaned_data['about']
+                new_player.save()
+                return render_to_response("Success.html",{'message':"You have successfully registered. Please <a href='/login/'>Login</a> to continue."},context_instance=RequestContext(request))
             except:
                 return HttpResponse(status=500)
 
@@ -32,8 +43,109 @@ def register_new_player(request):
 
     return render_to_response("New_Player.html",{'form':form},context_instance=RequestContext(request))
         
+def confirm_player(request,query):
+    try:
+        player = Player.objects.get(user=request.user)
+        unconfirmed_player = Player.objects.get(user=User.objects.get(id=query))
+        if not player.team == unconfirmed_player.team:
+            return render_to_response("Error.html",{'message':"That player does not want to join your team"},context_instance=RequestContext(request))
+        if unconfirmed_player.is_team_banned:
+            return render_to_response("Error.html",{'message':"That player is currently banned."},context_instance=RequestContext(request))
+        if unconfirmed_player.is_confirmed:
+            return render_to_response("Error.html",{'message':"That player is already part of a team."},context_instance=RequestContext(request))
+        unconfirmed_player.is_confirmed = True
+        unconfirmed_player.save()
+    except:
+        return HttpResponse(status=500)
 
-#def register_new_team(request):
+    return HttpResponseRedirect('/players/home/')
+
+def gen_join_key():
+    chars = string.ascii_uppercase + string.digits
+    k =  ''.join(random.choice(chars) for x in range(4))
+    try:
+        Team.objects.get(join_key=k)
+        return gen_join_key()
+    except Team.DoesNotExist: 
+        return k
+
+def register_new_team(request):
+    if request.method == 'POST':
+        form = NewTeamForm(request.POST)
+        if form.is_valid():
+            try: 
+                new_team = Team(name=form.cleaned_data['name'],slogan=form.cleaned_data['slogan'],join_key=gen_join_key())
+                new_team.save()
+                player = Player.objects.get(user=request.user)
+                player.team = new_team
+                player.is_confirmed = True
+                player.save()
+                return render_to_response("Success.html",{'message':"You have successfully registerd a new team. <a href='/game/'>Continue</a>"},context_instance=RequestContext(request))
+            except:
+                return HttpReponse(status=500)
+    else:
+        form = NewTeamForm()
+
+    return render_to_response("New_Team.html",{'form':form},context_instance=RequestContext(request))
+
+
+def join_team(request):
+    if request.method == 'POST':
+        form = JoinTeamForm(request.POST)
+        if form.is_valid():
+            try:
+                team = get_object_or_404(Team,join_key=form.cleaned_data['join_key'],is_active=True)
+                if team.count_players() >= 5:
+                    return render_to_response("Error.html",{'message':'That team already has more than 5 members.'},context_instance=RequestContext(request))
+                player = Player.objects.get(user=request.user)
+                player.team = team;
+                player.is_confirmed = False
+                player.is_team_banned = False
+                player.save()
+                return render_to_response("Success.html",{'message':"You have successfully joined the team. <a href='/game/'>Continue</a>"},context_instance=RequestContext(request))
+            except:
+                return HttpReponse(status=500)
+    else:
+            form = JoinTeamForm()
+
+    return render_to_response("Join_Team.html",{'form':form},context_instance=RequestContext(request))
+
+def leave_team(request):
+    if request.method == 'GET' and 'confirm' in request.GET and request.GET['confirm'] == 'true': 
+        try:    
+            player = Player.objects.get(user=request.user)
+            player.team = None
+            player.is_confirmed = False
+            player.is_team_banned = False
+            player.save()
+            return render_to_response("Success.html",{'message':"You have successfully left the team. <a href='/game/'>Continue</a>"},context_instance=RequestContext(request))
+        except:
+            return HttpResponse(status=500)
+    else:
+        return render_to_response("Leave_Team.html",context_instance=RequestContext(request))
+
+def request_ban(request):
+    if request.method == 'POST':
+        form = RequestBanForm(request.POST)
+        if form.is_valid():
+            try:
+                bad_player = Player.objects.get(user=User.objects.get(username=form.cleaned_data['username']))
+                requested_by = Player.objects.get(user=request.user)
+                if bad_player == requested_by:
+                    errors = form._errors.setdefault("username", ErrorList())
+                    errors.append(u"You may not ban yourself.")
+                    return render_to_response("Request_Ban.html",{'form':form},context_instance=RequestContext(request))
+                ban_request = BanRequest(requested_by=requested_by,bad_player=bad_player,reason=form.cleaned_data['reason']) 
+                ban_request.save() 
+                return render_to_response("Success.html",{'message':"You have successfully submitted a ban request. <a href='/game/'>Continue</a>"},context_instance=RequestContext(request))
+            except:
+                return HttpResponse(status=500)
+    else:
+        form = RequestBanForm()
+
+    return render_to_response("Request_Ban.html",{'form':form},context_instance=RequestContext(request))
+
+
 
 #def update_team_info(request):
 

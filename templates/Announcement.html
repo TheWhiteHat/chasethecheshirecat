@@ -1,29 +1,13 @@
-<html>
-<head>
- <title>{{ page.title }}</title>
-</head>
-<body>
-An annoucement!<br>
-title: {{ page.title }}<br>
-body text: {{ page.body_text }}<br>
-pub date: {{ page.pub_date }}<br>
-author: {{ page.author.email }}<br>
+{% extends "Base.html" %}
+{% block page_title %}{{ page.title }}{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>{{ page.title }}</h1>
 
-{% if page.comments_allowed %}
-{% load comments %}
-<br><br>comments are allowed, here they are:<br>
-{% render_comment_list for page %}
-<hr />
-{% if user.is_authenticated %}
-<br>wanna post a comment? here you go:<br>
-{% render_comment_form for page %}
-{% else %}
-<br>please login to view comments<br>
-{% endif %}
-{% else %}
 
-<br><br>comments are not allowed on this page.<br>
+{{ page.body_text|safe }}
 
-{% endif %}
-</body>
-</html>
+<p>Posted on {{page.pub_date}} by {{page.author.username}}</p>
+</div>
+{% include "Comment_List.html" with page=page %}
+{% endblock %}

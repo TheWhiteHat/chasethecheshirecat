@@ -1,0 +1,15 @@
+{% extends "Base.html" %}
+{% block page_title %}{{ player.user.username }}{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>{{ player.user.username }}</h1>
+<p><strong>Member Since: </strong> {{ player.user.date_joined }}</p>
+{% if player.team %}
+<p><strong>Team:</strong> <a href="{{ player.team.get_absolute_url }}">{{ player.team.name }}</a></p>
+{% else%}
+<p>Not part of a team</p>
+{% endif %}
+<p><strong>About {{player.user.username}}: </strong> <br>{{ player.about }}</p>
+</div>
+
+{% endblock %}

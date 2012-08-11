@@ -1,0 +1,22 @@
+{% extends "Base.html" %}
+{% block page_title %}{{ team.name }}{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>{{ team.name }}</h1>
+{% if team.is_active %}
+<p><strong>Date Created: </strong> {{ team.date_joined }}</p>
+<p><strong>Members:</strong><br>
+{% for p in team.player_set.all %}
+    {% if p.is_confirmed %}
+ <a href="{{ p.get_absolute_url }}">{{ p.user.username }}</a><br>
+  {% endif %}
+{% endfor %}
+</p>
+<p><strong>Points:</strong> {{team.points }}</p>
+<p><strong>{{team.name}} slogan: </strong> {{ team.slogan }}</p>
+{% else %}
+    This team is currently banned.
+{% endif %}
+</div>
+
+{% endblock %}

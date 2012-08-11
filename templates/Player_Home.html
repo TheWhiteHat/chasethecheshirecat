@@ -1,0 +1,34 @@
+{% extends "Base.html" %}
+{% block page_title %}Home{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+{% if user.is_authenticated %}
+    <h1>Welcome, {{ user.username }}</h1>
+    <p><a href="{{ user.get_profile.get_absolute_url }}">My Profile</a><br>
+    {% if user.get_profile.team and user.get_profile.is_confirmed %}
+        You are on the team <a href="{{ user.get_profile.team.get_absolute_url }}">{{ user.get_profile.team.name }}</a> [<a href="/players/leaveteam/">Leave this team</a>]<br>
+    {% else %}
+        You are not on any team.<br>
+    <a href="/players/jointeam/">Join a Team</a><br>
+    <a href="/players/newteam/">Register a new Tem</a>
+    </div>
+    {% endif %}
+    {% if user.get_profile.team and user.get_profile.is_confirmed %}
+        <div class="halfBox">
+        <h1>Players who want to join your team</h1>
+        {% for p in user.get_profile.team.player_set.all %}
+            {% if not p.is_confirmed %}
+                {{ p.user.username}} - [<a href="/players/confirmplayer/{{ p.user.id}}">Confirm</a>]<br>
+            {% endif%}
+        {% empty %}
+            No players currently want to join your team.
+        {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+<h1>Please Login</h1>
+You musted be logged in to view this.
+{% endif %}
+</div>
+
+{% endblock %}

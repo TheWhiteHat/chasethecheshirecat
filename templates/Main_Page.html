@@ -1,22 +1,31 @@
-<html>
-<head>
-<title>Welcome</title>
-</head>
-<body>
-Latest announcements:<br>
-{% for a in announcements %}
-    <a href="{{ a.get_absolute_url }}">{{ a.title }}</a><br>
-    {{ a.body_text }} <br>
-    by {{ a.author.email }}<br><br>
-{% endfor %}
-<a href="page/announcements/">View all announcements</a>
-<hr />
-this is the main page<br>
+{% extends "Base.html" %}
+{% block page_title %}Welcome{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Welcome!</h1>
+<p>The goal of the scavenger hunt is to get a hacker's mindset.<br>
+NO EXPERIENCE NECESSARY<br>
+But we expect you to learn... =^-^=<br>
+Good luck!
+</p>
+</div>
+<div class="halfBox fLeft">
+<h1>Latest Announcements</h1>
+<ul>
+    {% for a in announcements %}
+    <li><a href="{{ a.get_absolute_url }}">{{ a.title }}</a><br>{{ a.body_text }}</li>
+    {% endfor %}
+</ul>
+<a href="page/announcements/">&raquo; View all announcements</a>                
+</div>
+<div class="halfBox fRight">
 {% if user.is_authenticated %}
-<a href="/page/newinfopage">create a new info page</a> (the will be acessible at /page/[name you typed in the form])<br>
+    {% if user.get_profile.is_judge %}
+<a href="/page/newinfopage">create a new info page</a> <br>
 <a href="/page/newannouncement">create a new announcement</a><br>
 {% else %}
-please log in to view links
+you must be judge to post new content
 {% endif %}
-</body>
-</html>
+{% endif %}
+</div>
+{% endblock %}

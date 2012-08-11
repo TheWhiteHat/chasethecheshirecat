@@ -9,8 +9,8 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
     date_joined = models.DateTimeField(default=datetime.datetime.now())
     slogan = models.CharField(max_length=100)
-    points = models.IntegerField()
-    is_active = models.BooleanField()
+    points = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
     join_key = models.CharField(max_length=10)
 
     def __unicode__(self):
@@ -19,13 +19,24 @@ class Team(models.Model):
     def get_absolute_url(self):
         return "/players/team/%i" % self.id
 
+    def count_players(self):
+        n = 0
+        for p in self.player_set.all():
+            if p.is_confirmed and not p.is_team_banned:
+                n+=1
+        return n
+
 class Player(models.Model):
     user = models.OneToOneField(User)
     team = models.ForeignKey(Team,null=True)
     about = models.TextField()
+    is_confirmed = models.BooleanField(default=False)
+    is_team_banned = models.BooleanField(default=False)
+    is_judge = models.BooleanField(default=False)
+
 
     def __unicode__(self):
-        return self.name
+        return self.user.username
 
     def get_absolute_url(self):
         return "/players/player/%i" % self.id
@@ -74,8 +85,34 @@ class TeamNameField(forms.CharField):
             return value
 
 class NewTeamForm(forms.Form):
-    name = forms.CharField(max_length=50)
+    name = TeamNameField(max_length=50)
     slogan = forms.CharField(max_length=100)
+
+class JoinTeamForm(forms.Form):
+    join_key = forms.CharField(max_length=10)
+
+class PlayerNameBanField(forms.CharField):
+    def clean(self, value):
+        super(PlayerNameBanField, self).clean(value)
+        try:
+            if Player.objects.get(user=User.objects.get(username=value)).is_judge:
+                raise forms.ValidationError("You may not ban a judge.")
+            return value
+        except User.DoesNotExist:
+            raise forms.ValidationError("This user does not exist.")
+
+class RequestBanForm(forms.Form):
+    username = PlayerNameBanField(max_length=50)
+    reason = forms.CharField(max_length=300,widget=forms.Textarea)
+
+    def clean(self,*args, **kwargs):
+        return super(RequestBanForm, self).clean(*args,**kwargs)
+
+class BanRequest(models.Model):
+   requested_by = models.ForeignKey(Player, related_name='banrequest_requested_by')
+   bad_player = models.ForeignKey(Player, related_name='banrequest_bad_player')
+   reason = models.TextField()
+   date_submitted = models.DateTimeField(default=datetime.datetime.now())
 
 def create_player_profile(sender,instance, created, **kwargs):
     if created:
