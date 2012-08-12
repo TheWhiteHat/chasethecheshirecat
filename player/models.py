@@ -114,6 +114,12 @@ class BanRequest(models.Model):
    reason = models.TextField()
    date_submitted = models.DateTimeField(default=datetime.datetime.now())
 
+class UpdateTeamInfoForm(forms.Form):
+    slogan = forms.CharField(max_length=100)
+
+class UpdatePlayerInfoForm(forms.Form):
+    about = forms.CharField(max_length=400,widget=forms.Textarea)
+
 def create_player_profile(sender,instance, created, **kwargs):
     if created:
         Player.objects.get_or_create(user=instance)

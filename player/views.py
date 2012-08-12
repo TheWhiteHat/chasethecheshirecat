@@ -145,7 +145,35 @@ def request_ban(request):
 
     return render_to_response("Request_Ban.html",{'form':form},context_instance=RequestContext(request))
 
+def update_team_info(request):
+    if request.method == 'POST':
+        form = UpdateTeamInfoForm(request.POST)
+        if form.is_valid():
+            try:
+                player = Player.objects.get(user=request.user)
+                team = player.team
+                team.slogan = form.cleaned_data['slogan']
+                team.save()
+                return render_to_response("Success.html",{'message':"Team info successfully updated. <a href='/players/home/'>Continue</a>'"},context_instance=RequestContext(request))
+            except:
+                return HttpResponse(status=500)
+    else:
+        form = UpdateTeamInfoForm()
 
+    return render_to_response("Update_Team_Info.html",{'form':form},context_instance = RequestContext(request))
 
-#def update_team_info(request):
+def update_player_info(request):
+    if request.method == 'POST':
+        form = UpdatePlayerInfoForm(request.POST)
+        if form.is_valid():
+            try:
+                player = Player.objects.get(user=request.user)
+                player.about = form.cleaned_data['about']
+                player.save()
+                return render_to_response("Success.html",{'message':"Player info successfully updated. <a href='/players/home/'>Continue</a>'"},context_instance=RequestContext(request))
+            except:
+                return HttpResponse(status=500)
+    else:
+        form = UpdatePlayerInfoForm()
 
+    return render_to_response("Update_Player_Info.html",{'form':form},context_instance = RequestContext(request))

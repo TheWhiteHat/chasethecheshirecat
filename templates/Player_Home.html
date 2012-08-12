@@ -4,9 +4,9 @@
 <div class="bigBox">
 {% if user.is_authenticated %}
     <h1>Welcome, {{ user.username }}</h1>
-    <p><a href="{{ user.get_profile.get_absolute_url }}">My Profile</a><br>
+    <p><a href="{{ user.get_profile.get_absolute_url }}">My Profile</a> - [<a href="/players/updateplayerinfo/">Edit Profile</a>]<br>
     {% if user.get_profile.team and user.get_profile.is_confirmed %}
-        You are on the team <a href="{{ user.get_profile.team.get_absolute_url }}">{{ user.get_profile.team.name }}</a> [<a href="/players/leaveteam/">Leave this team</a>]<br>
+        You are on the team <a href="{{ user.get_profile.team.get_absolute_url }}">{{ user.get_profile.team.name }}</a> [<a href="/players/leaveteam/">Leave this team</a>] - [<a href="/players/updateteaminfo/">Edit Team Profile</a>]<br>
     {% else %}
         You are not on any team.<br>
     <a href="/players/jointeam/">Join a Team</a><br>

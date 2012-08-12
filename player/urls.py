@@ -10,4 +10,6 @@ urlpatterns = patterns('player.views',
     url(r'^jointeam/$','join_team'),
     url(r'^leaveteam/$','leave_team'),
     url(r'^requestban/$','request_ban'),
+    url(r'^updateteaminfo/$','update_team_info'),
+    url(r'^updateplayerinfo/$','update_player_info'),
 )
