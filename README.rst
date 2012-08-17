@@ -17,7 +17,6 @@ Apps Summary
 * ``inform`` - info pages, rules, and clues.
 * ``score`` - list teams and their score.
 * ``game`` - provides functionlity to list challenges and submit answers to them.
-* ``judge`` - judge, reward points, and add challenges.
 * ``player`` - represents a player in this game. its an extension of the user object in django. 
 
 Detailed Plans for Apps
@@ -76,24 +75,6 @@ Views
 * ``submit`` - display appropiate submit form for a given challenge.
 * ``save_upload`` - called by ``submit`` to write an upload to the disk.
 * ``unlock_series`` - display form to unlock a challenge series.
-
------------------------------------------------
-
-``judge``
----------
-Models
-~~~~~~
-* ``JudgeSubmissionForm`` - form to comment on and validate/invalidate submission.
-* ``NewSeriesForm`` - a form to add a new challenge series.
-* ``NewChallengeForm`` - form to add a new challenge
-
-Views
-~~~~~
-* ``list_submissions`` - list all submissions by all groups
-* ``new_series`` - display form to create a new series.
-* ``new_challenge`` - display form to create new challenge.
-* ``judge_submission`` - display form to judge a submission and process it.
-
 
 -----------------------------------------------
 
