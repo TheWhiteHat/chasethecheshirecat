@@ -129,4 +129,3 @@ Views
 * ``request_ban`` - display a ban request form and submit ban request to judges.
 * ``update_team_info`` - display form to update a team's info and process it.
 * ``update_player_info`` - display form to update a player's info and process it.
-
