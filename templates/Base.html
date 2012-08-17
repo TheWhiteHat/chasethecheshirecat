@@ -12,15 +12,17 @@
             <h1>Chase The Cheshire Cat</h1>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/score/">Scores</a></li>
+                <li><a href="{% url score %}">Scores</a></li>
                 <li><a href="/page/info/rules">Rules</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="/players/home/">My Profile</a></li>
-                <li><a href="/game/">Play</a></li>
+                <li><a href="{% url player_home %}">My Profile</a></li>
+                    {% if user.get_profile.is_confirmed %}
+                    <li><a href="{% url game_home %}">Play</a></li>
+                    {% endif %}
                 <li><a href="/logout/">Logout</a></li>
                 {% else %}
                 <li><a href="/login/">Login</a></li>
-                <li><a href="/player/newplayer/">Register</a></li>
+                <li><a href="{% url new_player %}">Register</a></li>
                 {% endif %}
                 
             </ul>

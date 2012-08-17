@@ -31,7 +31,7 @@ def list_announcements(request,page_number):
     except PageNotAnInteger:
         a_list = paginator.page(1)
     except EmptyPage:
-         a_list = paginator.page(paginator.num_pages)
+        a_list = paginator.page(paginator.num_pages)
 
     return render_to_response("Announcement_List.html",{'announcements':a_list},context_instance=RequestContext(request))
 

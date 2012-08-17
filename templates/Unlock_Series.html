@@ -1,18 +1,19 @@
 {% extends "Base.html" %}
-{% block page_title %}New Teamt{% endblock %}
+{% block page_title %}Unlock Series{% endblock %}
 {% block page_content %}
 <div class="bigBox">
-<h1>Create New Info Page</h1>
+<h1>Unlock Series</h1>
 {% if user.is_authenticated  %}
-<form action="{% url new_team %}" method="post">{% csrf_token %}
+<form action="{% url unlock_series %}" method="post">{% csrf_token %}
 {{ form.non_field_errors }}
 {% for field in form %}
 {{ field.errors }}<br>
 {{ field.label_tag }} : {{ field }} <br>
 {% endfor %}
-<input type="submit" value="add team" />
+<input type="submit" value="unlock" />
+</form>
 {% else %}
-you must be logged in to create a new team.
+You must be logged in to unlock.
 {% endif %}
 </div>
 {% endblock %}

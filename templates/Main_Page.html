@@ -19,13 +19,8 @@ Good luck!
 <a href="page/announcements/">&raquo; View all announcements</a>                
 </div>
 <div class="halfBox fRight">
-{% if user.is_authenticated %}
-    {% if user.get_profile.is_judge %}
-<a href="/page/newinfopage">create a new info page</a> <br>
-<a href="/page/newannouncement">create a new announcement</a><br>
-{% else %}
-you must be judge to post new content
-{% endif %}
-{% endif %}
+<h1>Top Rankings</h1>
+{% load top_rankings %}
+{% top_rankings %}
 </div>
 {% endblock %}

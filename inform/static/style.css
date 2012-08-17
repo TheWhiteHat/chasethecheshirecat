@@ -80,7 +80,7 @@ div.bigBox{
     background-color: #ccc;
     padding: 10px;
     font-family: sans-serif;
-    margin-bottom: 15px;
+    margin-top: 15px;
 }
 div.bigBox h1{
     font-family: 'Fredoka One', sans-serif;
@@ -100,11 +100,11 @@ div.bigBox a:hover{
 }
 div.fLeft{
     float: left;
-    clear: none;
+    clear: left;
 }
 div.fRight{
     float: right;
-    clear: none;
+    clear: right;
 }
 div.halfBox{
     width: 440px;
@@ -157,6 +157,40 @@ div.halfBox ol{
     list-style-type: decimal;
     padding-left: 20px;
 }
+div.quarterBox{
+    width: 220px;
+    padding: 10px;
+    height: auto;
+    font-family: sans-serif;
+    border-radius: 4px;
+    background-color: #B7B7B7;
+    margin-top: 14px;
+    font-size: 14px;
+}
+div.quarterBox h1{
+    font-family: sans-serif;
+    color: #333;
+    margin: 0px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 20px;    
+}
+div.threeFourthsBox{
+    width: 660px;
+    padding: 10px;
+    height: auto;
+    font-family: sans-serif;
+    border-radius: 4px;
+    background-color: #B7B7B7;
+    margin-top: 14px;
+    font-size: 14px;
+}
+div.threeFourthsBox h1{
+    font-family: sans-serif;
+    color: #333;
+    margin: 0px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 20px;    
+}
 input.beautifulText{
     border-radius: 3px;
     border: 1px solid #222;
@@ -205,4 +239,49 @@ div.comment p{
 }
 div.comment i{
     color: #888;
+}
+.button {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border: 1px solid #d4d4d4;
+    margin: 0px 0px 10px 0px;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff;
+    font:12px/normal sans-serif;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    background-color: #ececec;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#D6D6D6));
+    background-image: -moz-linear-gradient(#f4f4f4, #D6D6D6);
+    background-image: -ms-linear-gradient(#f4f4f4, #D6D6D6);
+    background-image: -o-linear-gradient(#f4f4f4, #D6D6D6);
+    background-image: linear-gradient(#f4f4f4, #D6D6D6);
+    -moz-background-clip: padding; /* for Firefox 3.6 */
+    background-clip: padding-box;
+    border-radius: 0.2em;
+    box-shadow: 0px 0px 0px 1px #999;
+    /* IE hacks */
+    zoom: 1;
+    *display: inline;
+}
+.button:hover,
+.button:focus,
+.button:active,
+.button.active {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #3c8dde;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -moz-linear-gradient(#599bdc, #3072b3);
+    background-image: -o-linear-gradient(#599bdc, #3072b3);
+    background-image: linear-gradient(#599bdc, #3072b3);
 }

@@ -34,7 +34,7 @@ Models
 
 Views
 ~~~~~
-* ``view_info_page`` - display the index of the site with latest announcements and links.
+* ``view_main_page`` - display the index of the site with latest announcements and links.
 * ``view_info_page`` - display InfoPage
 * ``view_announcement`` - display a single annoucement
 * ``list_announcements`` - list all announcements
@@ -60,13 +60,13 @@ Views
 --------
 Models
 ~~~~~~
+* ``Series`` - A list of challenges, unlocked by qrcode.
 * ``Challenge`` - a contest challenge with name, description, dates, etc.
 * ``Deliverable`` - a deliverable object. Could be linked to a file and has an owner/challenge.
 * ``Submission`` - a submission, has a deliverable and dates, challenge. Could be valid/invalid as determined by judges.
-* ``SubmitKeyForm`` - a submit form that handles text
-* ``SubmitImageForm`` - a submit form that handles images
-* ``SubmitAudioForm`` - a submit form that handles audio
-* ``SubmitVideoForm`` - a submit form that handles video
+* ``SubmitKeyForm`` - a form that handles key submissions (ex. codes from crypto/html challenges)
+* ``SubmiFileForm`` - a submit form that handles file uploadloads.
+* ``UnlockSeriesForm`` - a form to unlock a series given a qrcode.
 
 Views
 ~~~~~
@@ -74,7 +74,8 @@ Views
 * ``view_challenge`` - view single page for a challenge
 * ``list_submissions`` - lists submissions by a group
 * ``submit`` - display appropiate submit form for a given challenge.
-
+* ``save_upload`` - called by ``submit`` to write an upload to the disk.
+* ``unlock_series`` - display form to unlock a challenge series.
 
 -----------------------------------------------
 
@@ -83,11 +84,14 @@ Views
 Models
 ~~~~~~
 * ``JudgeSubmissionForm`` - form to comment on and validate/invalidate submission.
+* ``NewSeriesForm`` - a form to add a new challenge series.
 * ``NewChallengeForm`` - form to add a new challenge
 
 Views
 ~~~~~
 * ``list_submissions`` - list all submissions by all groups
+* ``new_series`` - display form to create a new series.
+* ``new_challenge`` - display form to create new challenge.
 * ``judge_submission`` - display form to judge a submission and process it.
 
 
@@ -100,13 +104,29 @@ Models
 * ``Player`` - a player in this game
 * ``Team`` - a team of max 5 members with a name
 * ``NewPlayerForm`` - form to register a new player
+* ``PlayerNameField`` - a form field that must be unique (username)
 * ``NewTeamForm`` - form to register a new team
+* ``TeamNameField`` - a form field that must be unique (team name)
 * ``TeamInfoForm`` - form to update team info
+* ``JoinTeamForm`` - form to join a team, given a join key.
+* ``RequestBanForm`` - form to handle a ban request
+* ``PlayerNameBanField`` - a field that disables the banning of yourself and judges.
+* ``BanRequest`` - a request to ban a user.
+* ``UpdateTeamInfoForm`` - a form to handle updating team info.
+* ``UpdatePlayerInfoForm`` - a form to handle updating player info.
 
 Views
 ~~~~~
 * ``view_player_info`` - view info about a player
 * ``view_team_info`` - view info about a team
+* ``player_home`` - a home page for the player.
 * ``register_new_player`` - display a form to register a new player and process it.
-* ``register_new_team`` -  display a form to register a team and process it. 
+* ``confirm_player`` - confirm a player into a team.
+* ``gen_join_key`` - generate a unique join key for a team.
+* ``register_new_team`` -  display a form to register a team and process it.
+* ``join_team`` - display form to join a team and process it.
+* ``leave_team`` - display a leave team confirmation message and remove player from current team.
+* ``request_ban`` - display a ban request form and submit ban request to judges.
 * ``update_team_info`` - display form to update a team's info and process it.
+* ``update_player_info`` - display form to update a player's info and process it.
+

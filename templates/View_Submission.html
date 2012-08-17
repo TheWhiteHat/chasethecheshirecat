@@ -1,0 +1,15 @@
+{% extends "Base.html" %}
+{% block page_title %}View Submission{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>{{ submission.date_submitted|date:"M/d/Y" }}</h1>
+
+
+Submission for {{ submission.challenge.name }}.
+         {% if submission.is_valid == None %}
+            Judges have yet to judge this submission.
+         {% else %}
+             Judges ruled that your submission is {{ submission.is_valid }}. Comments:<br>
+             {{ submission.comment }}
+         {% endif %}
+{% endblock %}

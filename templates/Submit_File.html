@@ -1,0 +1,59 @@
+{% extends "Base.html" %}
+{% block page_title %}Submit{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" type="text/css" href="/static/fileuploader.css" />
+<script type="text/javascript" src="/static/fileuploader.js"></script>
+
+<div class="bigBox">
+<h1>Submit</h1>
+
+<div id="file-uploader">
+<noscript>
+<p>Please enable JavaScript to use file uploader.</p>
+<!-- or put a simple form for upload here -->
+</noscript>
+</div>
+<div id="message">
+  
+</div>
+<script type="text/javascript">
+allowed_extensions = [];
+del_type = '{{ del_type}}';
+switch(del_type){
+  case 'image':
+    allowed_extensions = ['jpg','jpeg','png','gif'];
+    break;
+  case 'audio':
+    allowed_extensions = ['mp3','ogg','wav','flac','3gp','m4a'];
+    break;
+  case 'video':
+    allowed_extensions = ['mp4','mov','avi','wmv','3gp','flv','mpg'];
+}
+var uploader = new qq.FileUploader({
+// pass the dom node (ex. $(selector)[0] for jQuery users)
+element: document.getElementById('file-uploader'),
+// path to server-side upload script
+action: '{% url submit_file challenge_id %}',
+  multiple: false,
+    onComplete: function( id, fileName, responseJSON ) {
+      if( responseJSON.success ){
+        (elem=document.getElementById("file-uploader")).parentNode.removeChild(elem)
+        document.getElementById("message").innerHTML = "Successfully submitted file. <a href='/game/'>Continue</a>";
+      }
+      else{
+         (elem=document.getElementById("file-uploader")).parentNode.removeChild(elem)
+        document.getElementById("message").innerHTML = "Error! Please  <a href='{% url view_challenge challenge_id %}'> try again.</a>";
+      }
+    },
+    allowedExtensions: allowed_extensions,
+    params: {
+     'csrf_token': '{{ csrf_token }}',
+     'csrf_name': 'csrfmiddlewaretoken',
+     'csrf_xname': 'X-CSRFToken',
+     'challenge_id': '{{challenge_id}}',
+    },
+});
+</script>
+</div>
+{% endblock %}
+

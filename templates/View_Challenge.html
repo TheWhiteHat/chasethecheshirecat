@@ -1,0 +1,28 @@
+{% extends "Base.html" %}
+{% block page_title %}{{ challenge.name }}{% endblock %}
+{% block page_content %}
+{% if not user.is_authenticated %}
+<div class="bigBox">
+<h1>Not Logged in</h1>
+Please log in.
+</div>
+{% else %}
+<div class="bigBox">
+<h1>{{ challenge.name }}</h1>
+<p>{{ challenge.description }}</p>
+<p>Worth {{ challenge.points }} points</p>
+<i>Posted on {{ challenge.pub_date }}</i>
+{% if completed %}
+<p>You have already completed this challenge!</p>
+{% else %}
+{% if submit_allowed %}
+{% ifequal challenge.deliverable "key" %}    
+<p><strong><a href="/game/submitkey/{{ challenge.id }}/">SUBMIT</a></strong></p>
+{% else %}
+<p><strong><a href="/game/submitfile/{{ challenge.id }}/">SUBMIT</a></strong></p>
+{% endifequal %}
+</div>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "Base.html" %}
+{% block page_title %}Scores{% endblock %}
+{% block page_content %}
+<div class="bigBox">
+<h1>Scores</h1>
+<ol>
+{% for team in teams %}
+<li><a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {{ team.points }} points </li>
+{% endfor %}
+</ol>
+{% endblock %}

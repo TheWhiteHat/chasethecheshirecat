@@ -1,13 +1,21 @@
 {% extends "Base.html" %}
-{% block page_title %}Challenges{% endblock %}
+{% block page_title %}All challenges{% endblock %}
 {% block page_content %}
+{% if not user.is_authenticated %}
+<div class="bigBox">
+<h1>Not Logged in</h1>
+Please log in.
+</div>
+{% else %}
+<div class="bigBox">
+    <h1>All Challenges</h1>
 
 {% for c in challenges %}
     <div class="listBox">
     <p>
-        <a href="{{ c.get_absolute_url }}">{{ a.title }}</a><br>
+        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a><br>
          {{ c.description }}<br>
-         <i>posted on {{ c.pub_date }} and worth {{ c.points }}</i>
+         <i>posted on {{ c.pub_date }} and worth {{c.points}} points</i>
     </p>
     </div>
 {% endfor %}
@@ -21,4 +29,5 @@ Page {{ challenges.number }} of {{ challenges.paginator.num_pages }}.
     <a href="{{ request.get_full_path }}{{ challenges.next_page_number }}">next</a>
 {% endif %}
 </div>
-{%endblock%}
+{% endif %}
+{% endblock %}
