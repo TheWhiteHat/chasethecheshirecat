@@ -118,7 +118,7 @@ def save_upload( uploaded, filename, raw_data, team, challenge, is_resub ):
         sub = "resub"
     else:
         sub =''
-    filename = settings.MEDIA_ROOT + str(challenge.id) + "_" + team.name.replace (" ", "_") + sub + "." + os.path.splitext(filename)[1][1:].strip()
+    filename = settings.MEDIA_ROOT +  str(challenge.id) + "_" + team.name.replace (" ", "_") + sub + "." + os.path.splitext(filename)[1][1:].strip()
     try:
       from io import FileIO, BufferedWriter
       with BufferedWriter( FileIO( filename, "wb" ) ) as dest:
@@ -130,10 +130,10 @@ def save_upload( uploaded, filename, raw_data, team, challenge, is_resub ):
         else:
           for c in uploaded.chunks( ):
             dest.write( c )
-        deliverable = Deliverable(del_type=challenge.deliverable,uploaded_file=filename)
-        deliverable.save()
-        submission = Submission(challenge=challenge,team=team,is_resubmission=is_resub,deliverable=deliverable)
+        submission = Submission(challenge=challenge,team=team,is_resubmission=is_resub)
         submission.save()
+        deliverable = Deliverable(del_type=challenge.deliverable,uploaded_file=filename,submission=submission)
+        deliverable.save()
         return True
     except IOError:
       pass
@@ -196,10 +196,10 @@ def submit_key(request,query):
                         return render_to_response("Error.html",{'message':'Wrong submission id.'},context_instace=RequestContext(request))
                     challenge = Challenge.objects.get(id=form.cleaned_data['challenge_id'])
                     team = Player.objects.get(is_confirmed=True,user=request.user).team
-                    deliverable = Deliverable(del_type='key',key=form.cleaned_data['key'])
-                    deliverable.save()
-                    submission = Submission(challenge=challenge,team=team,deliverable=deliverable)
+                    submission = Submission(challenge=challenge,team=team)
                     submission.save()
+                    deliverable = Deliverable(del_type='key',key=form.cleaned_data['key'],submission=submission)
+                    deliverable.save()
                     return render_to_response("Success.html",{'message':'Successfully made submission.'},context_instance=RequestContext(request))
                 except Challenge.DoesNotExist:
                     errors = form._errors.setdefault("challenge_id", ErrorList())

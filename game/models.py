@@ -27,14 +27,6 @@ class Challenge(models.Model):
     def get_absolute_url(self):
         return "/game/challenge/%i" % self.id
 
-class Deliverable(models.Model):
-    del_type = models.CharField(max_length=15,choices=DEL_CHOICES)
-    key = models.CharField(max_length=300,blank=True)
-    uploaded_file = models.FileField(upload_to="submissions/",blank=True)
-
-    def __unicode__(self):
-        return str(self.id)
-
 class Submission(models.Model):
     challenge = models.ForeignKey(Challenge)
     team = models.ForeignKey('player.Team')
@@ -42,13 +34,24 @@ class Submission(models.Model):
     is_valid = models.NullBooleanField(null=True,default=None)
     is_resubmission = models.BooleanField(default=False)
     comment = models.TextField(blank=True)
-    deliverable =  models.ForeignKey(Deliverable)
-    
+
     def __unicode__(self):
-        return self.team.name + " " + self.challenge.name
+        b = ''
+        if self.is_resubmission:
+            b = 'Resubmission '
+        return b + self.team.name + " for  " + self.challenge.name
 
     def get_absolute_url(self):
         return "/game/submission/%i" % self.id
+
+class Deliverable(models.Model):
+    submission = models.ForeignKey(Submission)
+    del_type = models.CharField(max_length=15,choices=DEL_CHOICES)
+    key = models.CharField(max_length=300,blank=True)
+    uploaded_file = models.FileField(upload_to="submissions/",blank=True)
+
+    def __unicode__(self):
+        return str(self.id)
 
 class ChallengeIdField(forms.CharField):
     def clean(self,value):
