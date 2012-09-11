@@ -1,0 +1,24 @@
+<div id="navWrap">
+            <ul id="menu">
+                <li {% if request.get_full_path == "/" %}class="active"{% endif %}><a href="/">Home</a></li>
+                {% url score as u%}
+                <li {% if request.get_full_path ==  u %}class="active"{% endif %}><a href="{% url score %}">Scores</a></li>
+                {% url info_page 'rules' as u%}
+                <li {% if request.get_full_path == u %}class="active"{% endif %}><a href="{% url info_page 'rules' %}">Rules</a></li>
+                {% if user.is_authenticated %}
+                    {% url player_home as u %}
+                    <li {% if u in request.get_full_path %}class="active"{% endif %}><a href="{% url player_home %}">My Profile</a></li>
+                    {% if user.get_profile.is_confirmed %}
+                        {% url game_home as u%}
+                        <li {% if u in request.get_full_path%}class="active"{% endif %}><a href="{% url game_home %}">Play</a></li>
+                    {% endif %}
+                    {% url logout as u%}
+                    <li {% if request.get_full_path == u %}class="active"{% endif %}><a href="{% url logout %}">Logout</a></li>
+                {% else %}
+                    {% url login as u%}
+                    <li {% if request.get_full_path == u %}class="active"{% endif %}><a href="{% url login %}">Login</a></li>
+                    {% url new_player as u%}
+                    <li {% if request.get_full_path == u %}class="active"{% endif %}><a href="{% url new_player %}">Register</a></li>
+                {% endif %}
+            </ul>
+</div>
