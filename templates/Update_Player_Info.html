@@ -1,17 +1,19 @@
 {% extends "Base.html" %}
 {% block page_title %}Update player info{% endblock %}
 {% block page_content %}
-<div class="bigBox">
-<h1>Update player info</h1>
+<div class="full box">
+<h1 class="bigTitle">Update player info</h1>
 {% if user.is_authenticated %}
+<div class="form">
 <form action="." method="post">{% csrf_token %}
 {{ form.non_field_errors }}
 {% for field in form %}
-{{ field.errors }}<br>
-{{ field.label_tag }} : {{ field }} <br>
+{{ field.errors }}
+{{ field.label_tag }} {{ field }}
 {% endfor %}
 <input type="submit" value="update player info" />
 </form>
+</div>
 {% else %}
 You are not logged in.
 {% endif %}

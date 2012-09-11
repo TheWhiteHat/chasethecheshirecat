@@ -2,32 +2,37 @@
 {% block page_title %}Home{% endblock %}
 {% block page_content %}
 {% if user.is_authenticated %}
+    <div class="quarter box fLeft">
+        <h1 class="bigTitle">Actions</h1>
     {% if is_a_team_member %}
-        <div class="quarterBox fLeft">
-        <h1>Actions</h1>
-        <a class="button" href="{{ user.get_profile.get_absolute_url }}">My Profile</a><br>
-        <a class="button" href="{% url update_player_info %}">Edit Profile</a><br>
-        <a class="button" href="{{ user.get_profile.team.get_absolute_url }}">Team Profile</a><br>
-        <a class="button" href="{% url update_team_info %}">Edit Team Profile</a><br>
-        <a class="button" href="{% url leave_team %}">Leave Team</a><br>
-        <a class="button" href="{% url request_ban %}">Request Ban</a><br>
+        
+        <ul class="actions">
+        <li><a  href="{{ user.get_profile.get_absolute_url }}">My Profile</a></li>
+        <li><a  href="{% url update_player_info %}">Edit Profile</a></li>
+        <li><a  href="{{ user.get_profile.team.get_absolute_url }}">Team Profile</a></li>
+        <li><a  href="{% url update_team_info %}">Edit Team Profile</a></li>
+        <li><a  href="{% url leave_team %}">Leave Team</a></li>
+        <li><a  href="{% url request_ban %}">Request Ban</a></li>
+        </ul>
         </div>
     {% else %}
-        <div class="quarterBox fLeft">
-        <h1>Actions</h1>
-        <a class="button" href="{% url join_team %}">Join a Team</a><br>
-        <a class="button" href="{% url new_team %}">Register a new Team</a>
+        <ul class="actions">
+        <li><a  href="{% url join_team %}">Join a Team</a></li>
+        <li><a  href="{% url new_team %}">Register a new Team</a></li>
+        </ul>
         </div>
     {% endif %}
-    <div class="threeFourthsBox fRight">
-        <h1>Welcome, {{ user.username }}</h1>
+    <div class="threeFourths box fRight">
+        <h1 class="bigTitle">Welcome, {{ user.username }}</h1>
         <p>Welcome to the profile page. Here you can update team info and confirm new players.</p>
         <p>If you feel that a player is being uncooperative, submit a ban request.</p>
+        {% if is_a_team_member %}
         <p>Your Team's join key is : <strong>{{ user.get_profile.team.join_key }}</strong></p>
+        {% endif %}
     </div>
 
-        <div class="halfBox fLeft">
-        <h1>Players Who Want to Join Your Team</h1>
+        <div class="half box fLeft">
+        <h2 class="bigTitle">Players Who Want to Join Your Team</h2>
         {% for p in unconfirmed_players %}
             {{ p.user.username}} - [<a href="{% url confirm_player p.user.id %}">Confirm</a>]<br>
         {% empty %}
@@ -35,15 +40,16 @@
         {% endfor %}
         </div>
 
-    <div class="halfBox fRight">
-        <h1>Top Rankings</h1>
+    <div class="half box fRight">
+        <h1 class="bigTitle">Top Rankings</h1>
         {% load top_rankings %}
         {% top_rankings %}
     </div>
 {% else %}
-<h1>Please Login</h1>
+<h1 class="bigTitle">Please Login</h1>
 You musted be logged in to view this.
-{% endif %}
 </div>
+{% endif %}
+
 
 {% endblock %}

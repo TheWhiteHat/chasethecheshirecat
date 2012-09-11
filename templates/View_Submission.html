@@ -1,15 +1,15 @@
 {% extends "Base.html" %}
 {% block page_title %}View Submission{% endblock %}
 {% block page_content %}
-<div class="bigBox">
-<h1>{{ submission.date_submitted|date:"M/d/Y" }}</h1>
+<div class="full box">
+<h1 class="bigTitle">{{ submission.date_submitted|date:"M/d/Y" }}</h1>
 
 
-Submission for {{ submission.challenge.name }}.
+Submission for {{ submission.challenge.name }}.<br>
          {% if submission.is_valid == None %}
             Judges have yet to judge this submission.
          {% else %}
-             Judges ruled that your submission is {{ submission.is_valid }}. Comments:<br>
+             Judges ruled that your submission is {% if not submission.is_valid %}not{% endif %} valid. Comments:<br>
              {{ submission.comment }}
          {% endif %}
 {% endblock %}

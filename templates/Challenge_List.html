@@ -1,26 +1,41 @@
 {% extends "Base.html" %}
 {% block page_title %}All challenges{% endblock %}
 {% block page_content %}
+<script src="/static/showSubmitted.js" type="text/javascript"></script>
+
 {% if not user.is_authenticated %}
-<div class="bigBox">
-<h1>Not Logged in</h1>
-Please log in.
+<div class="full box">
+    <h1 class="bigTitle">Not Logged In</h1>
+    <p>Please login.</p>
 </div>
 {% else %}
-<div class="bigBox">
-    <h1>All Challenges</h1>
-
+<div class="quarter box fLeft">
+    <h1 class="bigTitle">Actions</h1>
+    Hide Completed?
+    <input id="showSubmitted" name="showSubmitted" type="checkbox" onclick="toggleShowSubmit()" checked=true/>
+</div>
+<div class="threeFourths box fRight">
+    <h1 class="bigTitle">All Challenges </h1>
+     
 {% for c in challenges %}
-    <div class="listBox">
+    {% if c.submitted %}
+    <div class="commentWrapper hidden">
+    <p>
+        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a> [Submitted]<br>
+         {{ c.description }}<br>
+         <i>posted on {{ c.pub_date }} and worth {{c.points}} points</i>
+    </p>
+    </div>    
+    {% else %}    
+    <div class="commentWrapper">
     <p>
         <a href="{{ c.get_absolute_url }}">{{ c.name }}</a><br>
          {{ c.description }}<br>
          <i>posted on {{ c.pub_date }} and worth {{c.points}} points</i>
     </p>
     </div>
+    {% endif %}
 {% endfor %}
-
-Pages:<br>
 {% if challenges.has_previous %}
     <a href="{{ request.get_full_path }}{{ challenges.previous_page_number }}">previous</a>
 {% endif %}

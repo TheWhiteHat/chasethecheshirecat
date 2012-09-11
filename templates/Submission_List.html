@@ -2,22 +2,22 @@
 {% block page_title %}Your Submissions{% endblock %}
 {% block page_content %}
 {% if not user.is_authenticated %}
-<div class="bigBox">
-<h1>Not Logged in</h1>
+<div class="full box">
+<h1 class="bigTitle">Not Logged in</h1>
 Please log in.
 </div>
 {% else %}
-<div class="bigBox">
-    <h1>All submissions</h1>
+<div class="full box">
+    <h1 class="bigTitle">All submissions</h1>
 
 {% for s in submissions %}
-    <div class="listBox">
+    <div class="commentWrapper">
     <p>
         <a href="{{ s.get_absolute_url }}">{{ s.challenge.name }}</a><br>
          {% if s.is_valid == None %}
             Judges have yet to judge this submission.
          {% else %}
-             Judges ruled that your submission is {{ s.is_valid }}. Comments:<br>
+             Judges ruled that your submission is {% if not s.is_valid %}not{% endif %} valid. Comments:<br>
              {{ s.comment }}
          {% endif %}
     </p>

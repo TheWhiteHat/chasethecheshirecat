@@ -68,7 +68,7 @@ class NewPlayerForm(forms.Form):
    def clean_password(self):
         if self.data['password'] != self.data['password_confirm']:
             raise forms.ValidationError("Passwords don't match.")
-        if not re.compile('^[a-zA-Z]\w{5,14}$').match(self.data['password']):
+        if not re.compile('^[a-zA-Z]\w{5,25}$').match(self.data['password']):
             raise forms.ValidationError("Invalid password. Be more secure.")
         return self.data['password']
                                    
@@ -90,8 +90,19 @@ class NewTeamForm(forms.Form):
     name = TeamNameField(max_length=50)
     slogan = forms.CharField(max_length=100)
 
+class TeamKeyField(forms.CharField):
+    def clean(self,value):
+        super(TeamKeyField,self).clean(value)
+        try:
+            team = Team.objects.get(join_key=value,is_active=True)
+            if team.count_players() >= 5:
+                raise forms.ValidationError("Team cannot accept more players.")
+            return value
+        except Team.DoesNotExist:
+            raise forms.ValidationError("That team does not exist.")
+
 class JoinTeamForm(forms.Form):
-    join_key = forms.CharField(max_length=10)
+    join_key = TeamKeyField(max_length=10)
 
 class PlayerNameBanField(forms.CharField):
     def clean(self, value):

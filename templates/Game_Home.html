@@ -1,20 +1,23 @@
 {% extends "Base.html" %}
 {% block page_title %}Chase the Cheshire Cat{% endblock %}
 {% block page_content %}
-<div class="threeFourthsBox fRight">
-<h1>Chase the Cheshire Cat</h1>
+<div class="quarter box fLeft">
+<h1 class="bigTitle" >Actions</h1>
+<ul class="actions">
+    <li><a href="{% url unlock_series %}">Enter QRCode</a></li>
+    <li><a href="{% url list_submissions 1 %}">View Your Submissions</a></li>
+    <li><a href="{% url list_challenges 1 %}">View Challenges</a></li>
+</ul>
+</div>   
+<div class="threeFourths box fRight">
+<h1 class="bigTitle">Chase the Cheshire Cat</h1>
 <p>Welcome to the game.</p>
 <p>Remember that this is a competition, so don't share any answers with any other teams! Remeber that there will be cake and all good things.<p>
 <p>If you feel that a player on your team is being lame, feel free to submit a ban request under 'Profile.</p>
 </div>
-<div class="quarterBox fLeft">
-<h1>Actions</h1>
-<a class="button" href="{% url unlock_series %}">Enter QRCode</a>
-<a class="button" href="{% url list_submissions 1 %}">View Your Submissions</a>
-<a class="button" href="{% url list_challenges 1 %}">View Challenges</a>
-</div>
-<div class="halfBox fLeft">
-<h1>Latest Challenges</h1>
+
+<div class="half box fLeft">
+<h1 class="bigTitle">Latest Challenges</h1>
 <ul>
 {% for c in challenges %}
 <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a> <i>{{ c.pub_date|date:"M/d/Y" }} </i><br>{{ c.description }}</li>
@@ -22,8 +25,8 @@
 </ul>
 <a href="{% url list_challenges 1 %}">&raquo; All Challenges </a>
 </div>
-<div class="halfBox fRight">
-<h1>Top Rankings</h1>
+<div class="half box fRight">
+<h1 class="bigTitle">Top Rankings</h1>
 {% load top_rankings %}
 {% top_rankings %}
 </div>

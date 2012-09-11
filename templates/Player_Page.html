@@ -1,8 +1,8 @@
 {% extends "Base.html" %}
 {% block page_title %}{{ player.user.username }}{% endblock %}
 {% block page_content %}
-<div class="bigBox">
-<h1>{{ player.user.username }}</h1>
+<div class="full box">
+<h1 class="bigTitle">{{ player.user.username }}</h1>
 <p><strong>Member Since: </strong> {{ player.user.date_joined }}</p>
 {% if player.team %}
 <p><strong>Team:</strong> {% if user.get_profile.is_confirmed %}<a href="{{ player.team.get_absolute_url }}">{{ player.team.name }}</a>{% else %} None{% endif %}</p>

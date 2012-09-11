@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('player.views',
+    url(r'^$','player_home',name='player_home'),                   
     url(r'^team/(?P<query>\d+)$','view_team_info',name='team_info'),
-    url(r'^player/(?P<query>\d+)$','view_player_info',name='player_info'),
-    url(r'^home/$','player_home',name='player_home'),
+    url(r'^player/(?P<query>\d+)$','view_player_info',name='player_info'),    
     url(r'^newplayer/$','register_new_player',name='new_player'),
     url(r'^confirmplayer/(?P<query>\d+)$','confirm_player',name='confirm_player'),
     url(r'^newteam/$','register_new_team',name='new_team'),

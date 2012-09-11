@@ -3,9 +3,12 @@
 {% block page_content %}
 <link rel="stylesheet" type="text/css" href="/static/fileuploader.css" />
 <script type="text/javascript" src="/static/fileuploader.js"></script>
-
-<div class="bigBox">
-<h1>Submit</h1>
+<div class="quarter box fLeft">
+  <h1 class="bigTitle">Info</h1>
+  Allowed file types: <span id="fileTypes"></span>.
+</div>
+<div class="threeFourths box fRight">
+<h1 class="bigTitle">Submit</h1>
 
 <div id="file-uploader">
 <noscript>
@@ -17,17 +20,24 @@
   
 </div>
 <script type="text/javascript">
+function showFilTypes(filetypes){
+  document.getElementById('fileTypes').innerHTML = filetypes.join(', ');
+}
 allowed_extensions = [];
 del_type = '{{ del_type}}';
 switch(del_type){
   case 'image':
     allowed_extensions = ['jpg','jpeg','png','gif'];
+    showFilTypes(allowed_extensions);
     break;
   case 'audio':
     allowed_extensions = ['mp3','ogg','wav','flac','3gp','m4a'];
+    showFilTypes(allowed_extensions);
     break;
   case 'video':
     allowed_extensions = ['mp4','mov','avi','wmv','3gp','flv','mpg'];
+    showFilTypes(allowed_extensions);
+    break;
 }
 var uploader = new qq.FileUploader({
 // pass the dom node (ex. $(selector)[0] for jQuery users)
@@ -37,7 +47,7 @@ action: '{% url submit_file challenge_id %}',
   multiple: false,
     onComplete: function( id, fileName, responseJSON ) {
       if( responseJSON.success ){
-        (elem=document.getElementById("file-uploader")).parentNode.removeChild(elem)
+       // (elem=document.getElementById("file-uploader")).parentNode.removeChild(elem)
         document.getElementById("message").innerHTML = "Successfully submitted file. <a href='/game/'>Continue</a>";
       }
       else{

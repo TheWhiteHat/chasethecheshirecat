@@ -1,36 +1,39 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
-    <head>
-        <title>{% block page_title %}{% endblock %}</title>
-        <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/static/style.css" />
-        
-    </head>
-    <body>
-        <div id="header">
-            <div id="headerText">
-            <h1>Chase The Cheshire Cat</h1>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="{% url score %}">Scores</a></li>
-                <li><a href="/page/info/rules">Rules</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="{% url player_home %}">My Profile</a></li>
-                    {% if user.get_profile.is_confirmed %}
-                    <li><a href="{% url game_home %}">Play</a></li>
-                    {% endif %}
-                <li><a href="/logout/">Logout</a></li>
-                {% else %}
-                <li><a href="/login/">Login</a></li>
-                <li><a href="{% url new_player %}">Register</a></li>
-                {% endif %}
-                
-            </ul>
-            </div>
+<head>
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Princess+Sofia|Inconsolata|Quantico' rel='stylesheet' type='text/css'>
+</head>
+<!--
+ __   __   ______     ______     __  __     ______     __  __     ______     __   __     ______    
+/\ \ / /  /\  ___\   /\  == \   /\ \_\ \   /\  == \   /\ \/\ \   /\  ___\   /\ "-.\ \   /\  __ \   
+\ \ \'/   \ \  __\   \ \  __<   \ \____ \  \ \  __<   \ \ \_\ \  \ \  __\   \ \ \-.  \  \ \ \/\ \  
+ \ \__|    \ \_____\  \ \_\ \_\  \/\_____\  \ \_____\  \ \_____\  \ \_____\  \ \_\\"\_\  \ \_____\ 
+  \/_/      \/_____/   \/_/ /_/   \/_____/   \/_____/   \/_____/   \/_____/   \/_/ \/_/   \/_____/ 
+                                  VERYBUENO UP IN THIS BITCH 
+-->                                                                                                  
+<body>
+    <div id="container">
+    <div id="nudge"></div>
+    <div id="header">
+        {% include "Nav.html" %}
+    </div>
+
+    <div id="content">
+        {% block before_wrap %}{% endblock %}
+        <div class="wrapper">
+        {% block page_content%}{% endblock %}
+        <div class="spacer"></div>
         </div>
-        <div id="content">            
-            {% block page_content %}{% endblock %}
-            <div class="spacer"></div>
+    </div>
+    
+    <div id="footer">
+        <div id="footerBox">
+            <p>
+            Contest hosted by <a href="#">The White Hat</a><br>
         </div>
-    </body>
+    </div>
+    </div>
+</body>
 </html>

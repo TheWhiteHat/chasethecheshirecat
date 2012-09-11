@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 def game_home(request):
     "Returns a homepage for the game, with game-related actions, latest challenges, and top rankings."
@@ -20,7 +21,12 @@ def game_home(request):
 
                 for s in team.series_unlocked.all():
                     for c in Challenge.objects.filter(series=s).all():
-                        challenges.append(c)
+                        try:
+                            is_submitted = Submission.objects.get(challenge=c,team=team,is_valid=True)
+                        except Submission.DoesNotExist:
+                            challenges.append(c)
+                        
+                        
 
                 return render_to_response("Game_Home.html",{'challenges':challenges[0:4]},context_instance=RequestContext(request))
             
@@ -41,10 +47,16 @@ def list_challenges(request,page_number):
         challenges = []
             
         for s in team.series_unlocked.all():
-            for c in Challenge.objects.filter(series=s).all():
-                challenges.append(c)           
+                    for c in Challenge.objects.filter(series=s).all():
+                        try:
+                            is_submitted = Submission.objects.get(challenge=c,team=team,is_valid=True)
+                            c.submitted = True
+                        except Submission.DoesNotExist:
+                            c.submitted = False
+                        
+                        challenges.append(c)         
     
-        paginator = Paginator(challenges,10)
+        paginator = Paginator(challenges,6)
 
         if page_number == '':
             page_number = 1
@@ -200,7 +212,7 @@ def submit_key(request,query):
                     submission.save()
                     deliverable = Deliverable(del_type='key',key=form.cleaned_data['key'],submission=submission)
                     deliverable.save()
-                    return render_to_response("Success.html",{'message':'Successfully made submission.'},context_instance=RequestContext(request))
+                    return render_to_response("Success.html",{'message':'Successfully made submission. <a href="'+reverse('game_home')+'">Continue</a>'},context_instance=RequestContext(request))
                 except Challenge.DoesNotExist:
                     errors = form._errors.setdefault("challenge_id", ErrorList())
                     errors.append(u"Invalid Challenge ID")
@@ -228,7 +240,7 @@ def unlock_series(request):
                     else:
                         team.series_unlocked.add(series)
                         team.save()
-                        return render_to_response("Success.html",{'message':"Successfully added the series."},context_instance=RequestContext(request))
+                        return render_to_response("Success.html",{'message':'Successfully added the series. <a href="'+reverse('game_home')+'">Continue</a>'},context_instance=RequestContext(request))
                 except Team.DoesNotExist:
                     return render_to_response("Error.html",{'message':"You are not on a team."},context_instance=RequestContext(request))
                 except Player.DoesNotExist:

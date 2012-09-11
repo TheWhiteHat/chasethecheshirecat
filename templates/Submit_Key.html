@@ -1,16 +1,17 @@
 {% extends "Base.html" %}
 {% block page_title %}Submit Key{% endblock %}
 {% block page_content %}
-<div class="bigBox">
-<h1>Submit Key</h1>
+<div class="full box">
+<h1 class="bigTitle">Submit Key</h1>
 {% if user.is_authenticated  %}
+<div class="form">
 <form action="." method="post">{% csrf_token %}
 {{ form.non_field_errors }}
-Key:<br>
-{{ form.key }}
+{{form.key.label }} {{ form.key }}
 <input type="hidden" name="challenge_id" value="{{request.session.current_challenge}}"/><br>
 <input type="submit" value="submit" />
 </form>
+</div>
 {% else %}
 You must be logged in to submit.
 {% endif %}

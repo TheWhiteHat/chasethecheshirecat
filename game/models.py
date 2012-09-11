@@ -7,7 +7,7 @@ DEL_CHOICES = (('image','Image'),('video','Video'),('audio','Audio'),('physical'
 class Series(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    qrcode = models.CharField(max_length=10)
+    qrcode = models.CharField(max_length=30)
 
     def __unicode__(self):
         return self.name
@@ -17,7 +17,6 @@ class Challenge(models.Model):
     description = models.TextField()
     series = models.ForeignKey(Series)
     pub_date = models.DateTimeField(default=datetime.datetime.now())
-    due_date = models.DateTimeField(null=True)
     deliverable = models.CharField(max_length=15,choices=DEL_CHOICES)
     points = models.IntegerField()
 
@@ -80,7 +79,7 @@ class UnlockCodeField(forms.CharField):
             raise forms.ValidationError("Not a valid code.")
 
 class UnlockSeriesForm(forms.Form):
-    code = UnlockCodeField(max_length=10)
+    code = UnlockCodeField(max_length=30)
     
     def clean(self, *args, **kwargs):
         return super(UnlockSeriesForm, self).clean(*args, **kwargs)

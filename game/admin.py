@@ -26,7 +26,7 @@ class SubmissionAdmin(admin.ModelAdmin):
     form = SubmissionForm
     fieldsets = ( 
         (None, {'fields':(('team','date_submitted'))}),
-        ('Rate This', {'fields':('is_valid','comment')}),
+        ('Rate This', {'fields':('is_valid','comment','bonus_points')}),
         )
     readonly_fields = ['challenge','team','date_submitted']
     list_display = ('__unicode__','date_submitted')

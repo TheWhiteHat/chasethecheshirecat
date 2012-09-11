@@ -1,24 +1,25 @@
 {% load comments %}
 {% if page.comments_allowed %}
 
-    <div class="bigBox">
-    <h1>Comments</h1>
+    <div class="full box">
+    <h1 class="bigTitle">Comments</h1>
     {%  get_comment_list for page as comment_list %}
     {% for comment in comment_list%}
-       <div class="listBox">
+       <div class="commentWrapper">
        <p>
-       <strong>{{ comment.user_name }}</strong> says:<br>
+       <span class="commentName">{{ comment.user_name }}</span> says:<br>
        {{ comment.comment }}<br>
-       <i>{{ comment.submit_date }}</i>
+       <span class="commentDate">{{ comment.submit_date }}</span>
        </p>
        </div>
     {% endfor %}
-    {% if user.is_authenticated %}
-    <strong>Post a comment:</strong>
+    {% if user.is_authenticated %}<br>
+    <h2 class="bigTitle">Post a Comment</h2>
     {% get_comment_form for page as form %}
+    <div class="form">
     <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
-    <label for="id_comment" >{{ user.username }} says:</label><br />
+    <label for="id_comment" >Comment:</label>
     <textarea id="id_comment" rows="4" name="comment" class="beautifulText"></textarea>
     {{ form.content_type }}
     {{ form.object_pk }}
@@ -32,12 +33,14 @@
     <br />
     <input type="submit" name="submit" value="Post">
     </form>
+    </div>
     {% else %}
-       <br>please login to view comments<br>
+       <br>Please login to post comments<br>
     {% endif %}
 
 {% else %}
-
-<br><br>comments are not allowed on this page.<br>
+<div class="full box">
+    <h1 class="bigTitle">Comments</h1>
+Comments are not allowed on this page.
 </div>
 {% endif %}

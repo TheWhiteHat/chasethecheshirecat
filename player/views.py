@@ -67,7 +67,7 @@ def confirm_player(request,query):
     except:
         return HttpResponse(status=500)
 
-    return HttpResponseRedirect('/players/home/')
+    return HttpResponseRedirect('/players/')
 
 def gen_join_key():
     chars = string.ascii_uppercase + string.digits
@@ -89,7 +89,7 @@ def register_new_team(request):
                player.team = new_team
                player.is_confirmed = True
                player.save()
-               return render_to_response("Success.html",{'message':"You have successfully registerd a new team. <a href='/players/home/'>Continue</a>"},context_instance=RequestContext(request))
+               return render_to_response("Success.html",{'message':"You have successfully registerd a new team. <a href='/players/'>Continue</a>"},context_instance=RequestContext(request))
             except:
                return HttpReponse(status=500)
     else:
@@ -104,14 +104,12 @@ def join_team(request):
         if form.is_valid():
             try:
                team = get_object_or_404(Team,join_key=form.cleaned_data['join_key'],is_active=True)
-               if team.count_players() >= 5:
-                   return render_to_response("Error.html",{'message':'That team already has more than 5 members.'},context_instance=RequestContext(request))
                player = Player.objects.get(user=request.user)
                player.team = team;
                player.is_confirmed = False
                player.is_team_banned = False
                player.save()
-               return render_to_response("Success.html",{'message':"You have submitted a request to join the team. Please wait until another user confirms you. <a href='/players/home/'>Continue</a>"},context_instance=RequestContext(request))
+               return render_to_response("Success.html",{'message':"You have submitted a request to join the team. Please wait until another user confirms you. <a href='/players/'>Continue</a>"},context_instance=RequestContext(request))
             except:
                 return HttpResponse(status=500)
     else:
@@ -127,7 +125,7 @@ def leave_team(request):
             player.is_confirmed = False
             player.is_team_banned = False
             player.save()
-            return render_to_response("Success.html",{'message':"You have successfully left the team. <a href='/game/'>Continue</a>"},context_instance=RequestContext(request))
+            return render_to_response("Success.html",{'message':"You have successfully left the team. <a href='/players/'>Continue</a>"},context_instance=RequestContext(request))
         except:
             return HttpResponse(status=500)
     else:
@@ -163,7 +161,7 @@ def update_team_info(request):
                 team = player.team
                 team.slogan = form.cleaned_data['slogan']
                 team.save()
-                return render_to_response("Success.html",{'message':"Team info successfully updated. <a href='/players/home/'>Continue</a>'"},context_instance=RequestContext(request))
+                return render_to_response("Success.html",{'message':"Team info successfully updated. <a href='/players/'>Continue</a>'"},context_instance=RequestContext(request))
             except:
                 return HttpResponse(status=500)
     else:
@@ -179,7 +177,7 @@ def update_player_info(request):
                 player = Player.objects.get(user=request.user)
                 player.about = form.cleaned_data['about']
                 player.save()
-                return render_to_response("Success.html",{'message':"Player info successfully updated. <a href='/players/home/'>Continue</a>'"},context_instance=RequestContext(request))
+                return render_to_response("Success.html",{'message':"Player info successfully updated. <a href='/players/'>Continue</a>'"},context_instance=RequestContext(request))
             except:
                 return HttpResponse(status=500)
     else:

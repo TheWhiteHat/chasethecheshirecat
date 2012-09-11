@@ -1,8 +1,8 @@
 {% extends "Base.html" %}
 {% block page_title %}{{ team.name }}{% endblock %}
 {% block page_content %}
-<div class="bigBox">
-<h1>{{ team.name }}</h1>
+<div class="full box">
+<h1 class="bigTitle">{{ team.name }} - <i>"{{ team.slogan }}"</i></h1>
 {% if team.is_active %}
 <p><strong>Date Created: </strong> {{ team.date_joined }}</p>
 <p><strong>Members:</strong><br>
@@ -13,7 +13,6 @@
 {% endfor %}
 </p>
 <p><strong>Points:</strong> {{team.points }}</p>
-<p><strong>{{team.name}} slogan: </strong> {{ team.slogan }}</p>
 {% else %}
     This team is currently banned.
 {% endif %}
