@@ -8,12 +8,11 @@ from game.models import *
 
 class NonZeroTeams(models.Manager):
     def nonzero_teams(self):
-        results = []
         teams = self.filter(is_active=True)
         for t in teams:
-            if t.count_players() > 0:
-                results.append(t)
-        return results
+            if t.count_players() <= 0:
+                teams = teams.exclude(id=t.id)
+        return teams
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
