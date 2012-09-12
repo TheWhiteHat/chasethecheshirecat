@@ -11,6 +11,11 @@ Wanna help?
 * Learn `Django <https://docs.djangoproject.com/en/1.4>`_
 * Join the project and start committing :) 
 
+TODO
+****
+* Class-based views
+* HTML5 push state this hoe for fancyness
+
 Apps Summary
 ************
 

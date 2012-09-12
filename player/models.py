@@ -6,6 +6,15 @@ from django.db.models.signals import post_save
 import re
 from game.models import *
 
+class NonZeroTeams(models.Manager):
+    def nonzero_teams(self):
+        results = []
+        teams = self.filter(is_active=True)
+        for t in teams:
+            if t.count_players() > 0:
+                results.append(t)
+        return results
+
 class Team(models.Model):
     name = models.CharField(max_length=50)
     date_joined = models.DateTimeField(default=datetime.datetime.now())
@@ -14,6 +23,7 @@ class Team(models.Model):
     series_unlocked = models.ManyToManyField('game.Series',blank=True)
     is_active = models.BooleanField(default=True)
     join_key = models.CharField(max_length=10)
+    objects = NonZeroTeams()
 
     def __unicode__(self):
         return self.name
@@ -27,6 +37,7 @@ class Team(models.Model):
             if p.is_confirmed and not p.is_team_banned:
                 n+=1
         return n
+    
     
 class Player(models.Model):
     user = models.OneToOneField(User)
