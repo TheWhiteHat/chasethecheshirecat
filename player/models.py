@@ -31,11 +31,7 @@ class Team(models.Model):
         return "/players/team/%i" % self.id
 
     def count_players(self):
-        n = 0
-        for p in self.player_set.all():
-            if p.is_confirmed and not p.is_team_banned:
-                n+=1
-        return n
+        return self.player_set.filter(is_confirmed=True, is_team_banned=False).count()
     
     
 class Player(models.Model):
