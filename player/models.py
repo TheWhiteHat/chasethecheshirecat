@@ -8,11 +8,8 @@ from game.models import *
 
 class NonZeroTeams(models.Manager):
     def nonzero_teams(self):
-        teams = self.filter(is_active=True)
-        for t in teams:
-            if t.count_players() <= 0:
-                teams = teams.exclude(id=t.id)
-        return teams
+        return self.filter(is_active=True, player__is_confirmed=True, player__is_team_banned=False).distinct()
+        # needs distinct because Team is joined on Player which otherwise result in a row for every player
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
