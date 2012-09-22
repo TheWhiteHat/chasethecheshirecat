@@ -270,7 +270,7 @@ ul.actions{
 ul.actions li {
     clear: right;
     margin: 0px;
-    line-height: 30px;
+    line-height: 20px;
     margin: 0px 0px 5px 0px;
     width: 100%;
     text-align: center;
@@ -278,7 +278,7 @@ ul.actions li {
 ul.actions a{
     width: 100%;
     display: block;
-    height: 30px;
+    padding: 5px 0;
     text-decoration: none;
     background-color: #222;
     border-radius: 4px;
