@@ -328,7 +328,6 @@ label{
     clear: left;
     text-align: right;
     width: 150px;
-    height: 35px;
     margin-bottom: 10px;
     line-height: 35px;
     font-weight: bold;
@@ -375,8 +374,10 @@ a.submit{
 	-webkit-border-radius:3px;
 	-moz-box-shadow:0 1px 0 #fff;
 	-webkit-box-shadow:0 1px 0 #fff;
+	clear:both;
 	color:#fff;
 	cursor:pointer;
+	display:block;
 	font-family:Arial,sans-serif;
 	font-size:12px;
 	font-weight:bold;
