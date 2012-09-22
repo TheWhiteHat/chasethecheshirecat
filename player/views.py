@@ -103,7 +103,8 @@ def join_team(request):
         form = JoinTeamForm(request.POST)
         if form.is_valid():
             try:
-               team = get_object_or_404(Team,join_key=form.cleaned_data['join_key'],is_active=True)
+               join_key = form.cleaned_data['join_key'].upper()
+               team = get_object_or_404(Team,join_key=join_key,is_active=True)
                player = Player.objects.get(user=request.user)
                player.team = team;
                player.is_confirmed = False
