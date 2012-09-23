@@ -236,15 +236,25 @@ div.spacer{
    position: relative;
    top: -20px;
    z-index: 1;
+   animation: pulsate 5s ease-in-out infinite alternate;
    -moz-animation: pulsate 5s ease-in-out infinite alternate;
    -webkit-animation: pulsate 5s ease-in-out infinite alternate;
+   -o-animation: pulsate 5s ease-in-out infinite alternate;
+}
+@keyframes pulsate {
+   from { opacity: 0; }
+   to { opacity: 1; }
 }
 @-moz-keyframes pulsate {
-   from{ opacity: 0; }
+   from { opacity: 0; }
    to { opacity: 1; }
 }
 @-webkit-keyframes pulsate {
-   from{ opacity: 0; }
+   from { opacity: 0; }
+   to { opacity: 1; }
+}
+@-o-keyframes pulsate {
+   from { opacity: 0; }
    to { opacity: 1; }
 }
 div.wrapper{
