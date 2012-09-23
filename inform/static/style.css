@@ -236,16 +236,8 @@ div.spacer{
    position: relative;
    top: -20px;
    z-index: 1;
-   -moz-animation-name: pulsate;
-   -moz-animation-duration: 5s;
-   -moz-animation-iteration-count: infinite;
-   -moz-animation-direction: alternate;
-   -moz-animation-timing-function: ease-in-out;
-   -webkit-animation-name: pulsate;
-   -webkit-animation-duration: 5s;
-   -webkit-animation-iteration-count: infinite;
-   -webkit-animation-direction: alternate;
-   -webkit-animation-timing-function: ease-in-out;
+   -moz-animation: pulsate 5s ease-in-out infinite alternate;
+   -webkit-animation: pulsate 5s ease-in-out infinite alternate;
 }
 @-moz-keyframes pulsate {
    from{ opacity: 0; }
